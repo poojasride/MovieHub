@@ -1,6 +1,11 @@
 import React from "react";
+import { useState } from "react";
+import SearchModel from "../components/SearchModel";
+import HeroSection from "../components/Hero";
 
 function Search() {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   return (
     <div>
       <h1 className="text-4xl font-bold text-center mt-8 mb-6">
@@ -24,11 +29,30 @@ function Search() {
         </svg>
 
         <input
+          autoFocus
           type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder="Search movies, TV shows..."
           className="w-full bg-transparent text-white text-lg outline-none placeholder-gray-400"
         />
+
+        <button
+          onClick={() => {
+            // Only open the search model if there's a query
+            if (query.trim()) {
+              setOpen(true);
+            }
+          }}
+          className="text-white rounded bg-red-600 px-4 py-2 ml-4 hover:bg-red-700 transition duration-300"
+        >
+          Search
+        </button>
       </div>
+
+      <SearchModel isOpen={open} onClose={() => setOpen(false)} query={query} />
+
+      <HeroSection />
     </div>
   );
 }
