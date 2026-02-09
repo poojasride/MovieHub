@@ -14,7 +14,7 @@ function ListMovies({ movies }) {
       {movies.map((movie) => (
         <div
           key={movie.imdbID}
-          className="bg-gray-800 p-4 rounded-lg shadow-md"
+          className="bg-gray-800 p-4 rounded-lg shadow-md hover:transition-transform transform hover:scale-105"
         >
           <img
             src={movie.Poster}
@@ -25,30 +25,23 @@ function ListMovies({ movies }) {
           <h3 className="text-lg font-bold line-clamp-1">{movie.Title}</h3>
 
           <div className="flex justify-between items-center mt-2">
-            <p className="text-sm text-gray-400">{movie.Year}</p>
-
             {/* Favorite Button */}
             <button
               onClick={() => toggleFavorite(movie)}
               className={`text-4xl ${
-                isFavorite(movie.imdbID)
-                  ? "text-red-500"
-                  : "text-gray-400"
+                isFavorite(movie.imdbID) ? "text-red-500" : "text-gray-400"
               }`}
             >
               ♥
             </button>
-          </div>
 
-          <Link
-            to={`/movie-details/${movie.imdbID}`}
-            className="inline-flex items-center gap-2 mt-3
-                       text-xs bg-white text-black
-                       px-3 py-1.5 rounded
-                       hover:bg-gray-200 transition"
-          >
-            ▶ View Details
-          </Link>
+            <Link
+              to={`/movie-details/${movie.imdbID}`}
+              className="text-center border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded transition  bg-green-500 hover:bg-green-600 hover:text-white"
+            >
+              View Details
+            </Link>
+          </div>
         </div>
       ))}
     </div>

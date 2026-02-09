@@ -3,18 +3,18 @@ import { useFavorites } from "../context/FavoritesContext";
 import { Link } from "react-router-dom";
 
 function FavoritesList() {
-  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { favorites, toggleFavorite } = useFavorites();
 
   return (
-    <section className="relative mt-8 max-w-7xl mx-auto px-4 pb-64">
+    <section className="relative mt-8 max-w-7xl mx-auto px-4 pb-40">
       {/* Page Header */}
       <header className="mb-10">
-        <h1 className="text-4xl font-semibold text-white tracking-tight hover:text-red-500 transition">
+        <h1 className="text-4xl font-semibold text-white tracking-tight">
           Your Favorites
         </h1>
-        <p className="mt-2 text-xl text-gray-400">
-          Movies you’ve saved to watch later. Your personal watchlist, all in
-          one place.
+        <p className="mt-2 text-lg text-gray-400">
+          Movies you’ve saved to watch later. Your personal watchlist in one
+          place.
         </p>
       </header>
 
@@ -36,12 +36,12 @@ function FavoritesList() {
             {favorites.map((movie) => (
               <div
                 key={movie.imdbID}
-                className="group flex items-center justify-between gap-5 px-6 py-4 hover:bg-white/10 transition"
+                className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 sm:px-6 py-4 hover:bg-white/10 transition"
               >
-                {/* Left */}
+                {/* Left Content */}
                 <Link
                   to={`/movie-details/${movie.imdbID}`}
-                  className="flex items-center gap-5 min-w-0"
+                  className="flex items-center gap-4 min-w-0"
                 >
                   <img
                     src={
@@ -54,7 +54,7 @@ function FavoritesList() {
                   />
 
                   <div className="min-w-0">
-                    <h3 className="text-white font-medium truncate group-hover:text-red-400 transition">
+                    <h3 className="text-white font-medium truncate group-hover:text-red-600 transition">
                       {movie.Title}
                     </h3>
                     <p className="text-xs text-gray-400 mt-1">
@@ -63,19 +63,18 @@ function FavoritesList() {
                   </div>
                 </Link>
 
-                <div className="flex items-center gap-3">
-                  {/* Right */}
+                {/* Actions */}
+                <div className="flex gap-2 w-full  sm:w-auto mt-4">
                   <Link
                     to={`/movie-details/${movie.imdbID}`}
-                    className="border border-white/20 text-white text-xs font-semibold px-3 py-1 rounded transition hover:bg-red-500 hover:text-white"
+                    className="text-center border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded transition  bg-green-500 hover:bg-green-600 hover:text-white"
                   >
                     View Details
                   </Link>
-                  {/* Remove from Favorites */}
+
                   <button
                     onClick={() => toggleFavorite(movie)}
-                    isFavorite={isFavorite(movie.imdbID)}
-                    className="border border-white/20 text-white text-xs font-semibold px-3 py-1 rounded transition hover:bg-red-500 hover:text-white"
+                    className="text-center border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded transition bg-red-500 hover:bg-red-600 hover:text-white"
                   >
                     Remove from Favorites
                   </button>
