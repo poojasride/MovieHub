@@ -8,7 +8,7 @@ function Search() {
   const [query, setQuery] = useState("");
   return (
     <div>
-      <h1 className="text-4xl font-bold text-center mt-8 mb-6">
+      <h1 className="text-4xl font-bold text-center mt-6 mb-6">
         Search for Movies
       </h1>
 

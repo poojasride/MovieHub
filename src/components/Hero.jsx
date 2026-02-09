@@ -1,9 +1,8 @@
 const HeroSection = () => {
   return (
     <section className="w-full  text-white">
-      <div className="max-w-7xl mx-auto px-6 py-24">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          
           {/* Hero Left */}
           <div className="space-y-6">
             <span className="inline-block text-sm tracking-widest uppercase text-red-500 font-semibold">
@@ -22,17 +21,17 @@ const HeroSection = () => {
 
             <div className="flex flex-wrap gap-4 pt-4">
               <button className="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-semibold transition">
-                Start Watching
+                Get Started
               </button>
 
               <button className="px-8 py-3 border border-gray-500 hover:border-white rounded-lg font-semibold transition">
-                Browse Library
+                Browse Movies
               </button>
             </div>
           </div>
 
           {/* Hero Right */}
-          <div className="space-y-6 text-gray-300">
+          <div className="space-y-4 text-gray-300">
             <div className="border border-gray-700 rounded-xl p-6 backdrop-blur-sm bg-white/5">
               <h3 className="text-xl font-semibold text-white mb-3">
                 Why Choose Us?
@@ -47,11 +46,10 @@ const HeroSection = () => {
             </div>
 
             <p className="text-sm text-gray-400">
-              Join millions of users enjoying premium entertainment with
-              zero compromise on quality.
+              Join millions of users enjoying premium entertainment with zero
+              compromise on quality.
             </p>
           </div>
-
         </div>
       </div>
     </section>
