@@ -1,5 +1,5 @@
 import Header from "./pages/Header.jsx";
-import Search from "./pages/Search.jsx";
+import HeroSection from "./components/Hero.jsx";
 import Movies from "./pages/Movies.jsx";
 import { MovieProvider } from "./context/MoviesContext.jsx";
 import MovieDetail from "./pages/MovieDetail.jsx";
@@ -14,7 +14,7 @@ function App() {
         <div className="max-w-7xl mx-auto text-white">
           <Header />
           <Routes>
-            <Route path="/" element={<Search />} />
+            <Route path="/" element={<HeroSection />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/movie-details/:id" element={<MovieDetail />} />
             <Route path="/favorites" element={<FavoritesList />} />

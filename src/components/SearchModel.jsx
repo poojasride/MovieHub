@@ -1,21 +1,23 @@
-import React, { use } from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import omdb from "../api/omdb";
 import { Link } from "react-router-dom";
-import omdbApi from "../api/omdb";
 
-function SearchModel({ isOpen, onClose, query }) {
+const SearchModal = ({ isOpen, onClose }) => {
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Close on Escape key
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // ESC close
   useEffect(() => {
     const esc = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", esc);
     return () => window.removeEventListener("keydown", esc);
   }, [onClose]);
 
+  // SEARCH WITH DEBOUNCE
   useEffect(() => {
-    // The empty query we don't want to search, just clear results
     if (!query) {
       setResults([]);
       return;
@@ -24,18 +26,22 @@ function SearchModel({ isOpen, onClose, query }) {
     const timer = setTimeout(async () => {
       try {
         setLoading(true);
-
-        const response = await omdbApi.get("", {
-          params: { s: query, type: "movie", page: 1 },
+        const res = await omdb.get("", {
+          params: {
+            s: query,
+            type: "movie",
+            page: 1,
+          },
         });
 
-        setResults(response.data.Search || []);
+        setResults(res.data.Search || []);
       } catch (err) {
-        console.error("Search error:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
-    }, 500);
+    }, 500); // for  delay
+
     return () => clearTimeout(timer);
   }, [query]);
 
@@ -52,10 +58,64 @@ function SearchModel({ isOpen, onClose, query }) {
       {/* CONTENT */}
       <div className="relative mt-24 mx-auto w-[90%] max-w-3xl">
         {/* SEARCH BAR */}
+        <div className="flex items-center bg-[#2f343a] rounded-xl px-6 py-4 shadow-2xl">
+          <svg
+            className="w-6 h-6 text-gray-400 mr-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+
+          <input
+            autoFocus
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search movies..."
+            className="w-full bg-transparent text-white text-lg outline-none"
+          />
+
+          <button
+            onClick={() => setQuery(searchTerm.trim())}
+            className="ml-4 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-medium"
+          >
+            Search
+          </button>
+
+          <button
+            onClick={() => {
+              onClose();
+              setSearchTerm("");
+              setQuery("");
+              setResults([]);
+            }}
+            className="ml-4 text-gray-400 hover:text-white"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
 
         {/* RESULTS */}
         {query && (
-          <div className="mt-4 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-xl max-h-[420px] overflow-y-auto">
+          <div className="mt-4 bg-[#141414] rounded-xl max-h-[420px] overflow-y-auto">
             {loading && (
               <p className="text-gray-400 text-center py-6">Searching...</p>
             )}
@@ -107,6 +167,6 @@ function SearchModel({ isOpen, onClose, query }) {
       </div>
     </div>
   );
-}
+};
 
-export default SearchModel;
+export default SearchModal;
