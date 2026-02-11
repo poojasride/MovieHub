@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import SearchModel from "../components/SearchModel";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
   const navLinkClass = ({ isActive }) =>
     `block px-3 py-2 rounded-md transition font-medium hover:bg-gray-700 $
@@ -16,7 +19,6 @@ function Header() {
         <h1 className="text-2xl font-extrabold tracking-wide text-white">
           Movie<span className="text-red-600">Hub</span>
         </h1>
-
         {/* Navigation */}
         <nav className="flex items-center space-x-4">
           <NavLink to="/" className={navLinkClass}>
@@ -61,13 +63,25 @@ function Header() {
       {/* Mobile Menu */}
       {menuOpen && (
         <nav className="md:hidden border-t border-gray-700 px-6 py-4 space-y-2 bg-gray-900 ">
-          <NavLink to="/" onClick={() => setMenuOpen(false)}  className={navLinkClass}>
+          <NavLink
+            to="/"
+            onClick={() => setMenuOpen(false)}
+            className={navLinkClass}
+          >
             Home
           </NavLink>
-          <NavLink to="/movies" onClick={() => setMenuOpen(false)} className={navLinkClass}>
+          <NavLink
+            to="/movies"
+            onClick={() => setMenuOpen(false)}
+            className={navLinkClass}
+          >
             Movies
           </NavLink>
-          <NavLink to="/favorites" onClick={() => setMenuOpen(false)} className={navLinkClass}>
+          <NavLink
+            to="/favorites"
+            onClick={() => setMenuOpen(false)}
+            className={navLinkClass}
+          >
             Favorites
           </NavLink>
         </nav>

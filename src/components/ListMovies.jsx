@@ -7,9 +7,6 @@ function ListMovies({ movies }) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <h1 className="col-span-full text-2xl font-bold text-center">
-        Exclusive Movies
-      </h1>
 
       {movies.map((movie) => (
         <div
@@ -17,9 +14,13 @@ function ListMovies({ movies }) {
           className="bg-gray-800 p-4 rounded-lg shadow-md hover:transition-transform transform hover:scale-105"
         >
           <img
-            src={movie.Poster}
+            src={
+              movie.Poster !== "N/A"
+                ? movie.Poster
+                : "https://via.placeholder.com/300x400"
+            }
             alt={movie.Title}
-            className="w-full h-[260px] object-fill mb-4 rounded"
+            className="w-full h-[260px] object-cover mb-4 rounded"
           />
 
           <h3 className="text-lg font-bold line-clamp-1">{movie.Title}</h3>
