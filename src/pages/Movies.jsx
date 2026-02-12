@@ -72,6 +72,12 @@ function Movies() {
         </div>
       </div>
 
+      {type === "episode" && (
+        <div className="text-center text-yellow-400 mb-6">
+          ⚠ Episodes are not available in the free OMDb API.
+        </div>
+      )}
+
       {/*  LOADING */}
       {loading && (
         <p className="text-center text-gray-400">Loading movies...</p>
@@ -87,11 +93,12 @@ function Movies() {
         <p className="text-center text-gray-400 text-lg">No movies found.</p>
       )}
 
-      <h2 className="text-center text-white text-lg mb-6">
-        Showing results for{" "}
-        <span className="text-red-500 font-semibold">"{query}"</span>
-      </h2>
-
+      {type !== "episode" && (
+        <h2 className="text-center text-white text-lg mb-6">
+          Showing results for{" "}
+          <span className="text-red-500 font-semibold">"{query}"</span>
+        </h2>
+      )}
       {!loading && !error && movies.length > 0 && (
         <ListMovies movies={movies} />
       )}

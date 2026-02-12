@@ -11,6 +11,15 @@ const omdbApi = axios.create({
 
 //  Search Movies
 export const searchMoviesApi = async (query, page = 1, type = "") => {
+  if (type === "episode") {
+    return {
+      Search: [],
+      totalResults: 0,
+      Response: "False",
+      Error: "Episodes require OMDb paid API",
+    };
+  }
+
   const response = await omdbApi.get("", {
     params: {
       s: query,
