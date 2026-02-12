@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import SearchModel from "../components/SearchModel";
+import { useNavigate } from "react-router-dom";
+import { useMovies } from "../context/MoviesContext";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { setQuery, setPage } = useMovies();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navLinkClass = ({ isActive }) =>
     `block px-3 py-2 rounded-md transition font-medium hover:bg-gray-700 $
@@ -30,34 +33,38 @@ function Header() {
             Favorites
           </NavLink>
         </nav>
+        {/* 🔍 SEARCH INPUT */}
+        <div className="flex items-center bg-white/5 px-3 py-2 rounded-lg border border-white/10">
+          <input
+            type="text"
+            placeholder="Search movies..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && searchTerm.trim()) {
+                setPage(1);
+                setQuery(searchTerm.trim());
+                navigate("/movies");
+                setSearchTerm("");
+              }
+            }}
+            className="bg-transparent outline-none text-sm text-white placeholder-gray-400"
+          />
 
-        {/* Search Button */}
-        <button
-          onClick={() => setOpen(true)}
-          aria-label="Open search"
-          className="group flex items-center gap-2 px-4 py-2 rounded-lg 
-             bg-white/5 hover:bg-white/10 
-             border border-transparent hover:border-red-500/40
-             transition-all duration-300"
-        >
-          <svg
-            className="w-5 h-5 text-gray-300 group-hover:text-red-500 transition-colors duration-300"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
+          <button
+            onClick={() => {
+              if (searchTerm.trim()) {
+                setPage(1);
+                setQuery(searchTerm.trim());
+                navigate("/movies");
+                setSearchTerm("");
+              }
+            }}
+            className="ml-2 text-red-500 hover:text-red-400"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-
-          <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300">
-            Search
-          </span>
-        </button>
+            🔍
+          </button>
+        </div>
       </div>
 
       {/* Mobile Header */}
@@ -67,29 +74,38 @@ function Header() {
         </h1>
 
         <div className="flex items-center gap-4">
-          {/* Search Button */}
-          <button
-            onClick={() => setOpen(true)}
-            aria-label="Open search"
-            className="group flex items-center gap-2 px-4 py-2 rounded-lg 
-             bg-white/5 hover:bg-white/10 
-             border border-transparent hover:border-red-500/40
-             transition-all duration-300"
-          >
-            <svg
-              className="w-5 h-5 text-gray-300 group-hover:text-red-500 transition-colors duration-300"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
+          {/* 🔍 SEARCH INPUT */}
+          <div className="flex items-center bg-white/5 px-3 py-2 rounded-lg border border-white/10">
+            <input
+              type="text"
+              placeholder="Search movies..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && searchTerm.trim()) {
+                  setPage(1);
+                  setQuery(searchTerm.trim());
+                  navigate("/movies");
+                  setSearchTerm("");
+                }
+              }}
+              className="bg-transparent outline-none text-sm text-white placeholder-gray-400"
+            />
+
+            <button
+              onClick={() => {
+                if (searchTerm.trim()) {
+                  setPage(1);
+                  setQuery(searchTerm.trim());
+                  navigate("/movies");
+                  setSearchTerm("");
+                }
+              }}
+              className="ml-2 text-red-500 hover:text-red-400"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
+              🔍
+            </button>
+          </div>
 
           {/* Hamburger */}
           <button
@@ -139,7 +155,6 @@ function Header() {
           </NavLink>
         </nav>
       )}
-      <SearchModel isOpen={open} onClose={() => setOpen(false)} />
     </header>
   );
 }

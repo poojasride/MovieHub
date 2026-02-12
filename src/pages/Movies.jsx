@@ -3,8 +3,17 @@ import { useMovies } from "../context/MoviesContext";
 import ListMovies from "../components/ListMovies";
 
 function Movies() {
-  const { movies, loading, error, page, setPage, totalResults, type, setType } =
-    useMovies();
+  const {
+    movies,
+    loading,
+    error,
+    page,
+    setPage,
+    totalResults,
+    type,
+    setType,
+    query,
+  } = useMovies();
 
   const totalPages = Math.ceil(totalResults / 10);
 
@@ -77,6 +86,11 @@ function Movies() {
       {!loading && !error && movies.length === 0 && (
         <p className="text-center text-gray-400 text-lg">No movies found.</p>
       )}
+
+      <h2 className="text-center text-white text-lg mb-6">
+        Showing results for{" "}
+        <span className="text-red-500 font-semibold">"{query}"</span>
+      </h2>
 
       {!loading && !error && movies.length > 0 && (
         <ListMovies movies={movies} />
